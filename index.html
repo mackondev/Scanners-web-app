@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            font-size: 50px;
+			font-family: Arial;
+			font-weight: bold;
+			background-color: #AAA;
+        }
+        input{
+			width: 720px;
+            line-height: 350%;
+            font-size: 50px;
+			font-weight: bold;
+			border: 4px solid #000;
+			text-align: center;
+        }
+        input[type=submit]{
+            width: 960px;
+            height: 300px;
+			font-weight: bold;
+        }
+        #miejsce{
+            width: 500px;
+        }
+        #miejsceBtn{
+            position: absolute;
+            top: 250px;
+            left: 710px;
+            height: 14em;
+            width: 15em;
+        }
+    </style>
+ <title>Excel</title>
+<button id="miejsceBtn" type="submit" onclick="settings();focusMethod();">Zapisz</button>
+</head>
+<body onload="data();load();">
+	<form method="post" action="connect.php">
+Data &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="datePicker" name="Data" readonly="true" /> <br><br>
+Miejsce 	<input type="text" id="miejsce" name="Miejsce" autocomplete="off"/><br><br>
+Produkt 	<input type="text" id="kod" name="Produkt" autocomplete="off" autofocus onchange="document.getElementsByName('ilosc')[0].focus()"/> <br><br>
+Ilosc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" list="ilosc" id="ilosc" name="Ilosc" autocomplete="off" /> <br><br>
+		<datalist id="ilosc">
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+			<option value="150">150</option>
+			<option value="200">200</option>
+		</datalist>
+
+		<input type="submit" value="DODAJ REKORD" onclick="return confirm('Kod: ' + kod.value + '\nIlosc: '+ilosc.value + '\nMiejsce: ' + miejsce.value)">
+	</form>
+<script>
+        let miejscekod;
+        var month;
+        switch(new Date().getMonth()){
+                case 0:
+                month = "1";
+                break;
+                case 1:
+                month = "2";
+                break;
+                case 2:
+                month = "3";
+                break;
+                case 3:
+                month = 4;
+                break;
+                case 4:
+                month = "5";
+                break;
+                case 5:
+                month = 6;
+                break;
+                case 6:
+                month = 7;
+                break;
+                case 7:
+                month = 8;
+                break;
+                case 8:
+                month = 9;
+                break;
+                case 9:
+                month = 10;
+                break;
+                case 10:
+                month = 11;
+                break;
+                case 11:
+                month = 12;
+        }
+        function data(){
+        var d = new Date();
+        var minuty = d.getMinutes();
+        if(minuty<=9){
+
+            var time= d.getFullYear() + "-"+month+"-"+d.getDate()+" | " + d.getHours() + ":0" + d.getMinutes() + ":" + d.getSeconds();
+        }
+        else{
+            var time=  d.getFullYear() + "-"+month+"-"+d.getDate()+" | " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        }
+        document.getElementById('datePicker').value= time;
+        }
+        function settings(){
+            miejscekod = document.getElementById('miejsce').value;
+            localStorage.setItem('miejscekod', miejscekod);
+
+        }
+        focusMethod = function getFocus(){
+            document.getElementById('kod').focus();
+        }
+        function load(){
+            miejscekod=localStorage.getItem('miejscekod');   
+            document.getElementById('miejsce').value = miejscekod;
+        }
+</script>
+</body>
+</html>
